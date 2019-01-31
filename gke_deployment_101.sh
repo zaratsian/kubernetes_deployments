@@ -19,6 +19,7 @@
 gke_cluster_name=gke_cluster_z1
 gke_app_name=gke_app_z1
 gke_app_image=gcr.io/google-samples/hello-app:1.0
+number_of_replicas=3
 
 
 #############################################################################
@@ -48,6 +49,15 @@ kubectl run $gke_app_name --image $gke_app_image --port 8080
 kubectl expose deployment $gke_app_name --type LoadBalancer --port 80 --target-port 8080
 
 
+# Scaling Deployment (Manual)
+# https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#scale
+kubectl scale deployment $gke_app_name --replicas $number_of_replicas
+
+# Scaling Deployment (Autoscale)
+# https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#autoscale
+#kubectl autoscale deployment $gke_app_name --max 6 --min 4 --cpu-percent 50
+
+
 #############################################################################
 #
 #   Status and Diagnosis
@@ -65,11 +75,11 @@ kubectl get service $gke_app_name
 #############################################################################
 
 # Delete a service
-#kubectl delete service $gke_app_name
+kubectl delete service $gke_app_name
 
 
 # Delete a service
-#gcloud container clusters delete $gke_cluster_name
+gcloud container clusters delete $gke_cluster_name
 
 
 
