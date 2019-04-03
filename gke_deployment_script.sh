@@ -107,5 +107,12 @@ kubectl expose deployment my-app \
     --target-port 8080
 
 
+#########################################################
+#  Delete GKE Cluster
+#########################################################
+
+gcloud container clusters delete $gke_cluster_name
+
+
 
 #ZEND
